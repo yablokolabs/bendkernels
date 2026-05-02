@@ -26,6 +26,9 @@ examples/bitonic_sort.bend      -> 32640
 examples/fibonacci_modes.bend   -> 13530
 examples/parallel_sum.bend      -> 8386560
 examples/tree_map_reduce.bend   -> 2064384
+examples/ai/tiny_mlp.bend       -> 426312
+examples/ai/minimax_tree.bend   -> 745
+examples/ai/ensemble_vote.bend  -> 2024
 ```
 
 These are checksums, not benchmark scores.

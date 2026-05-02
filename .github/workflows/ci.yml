@@ -25,5 +25,8 @@ jobs:
           bend run-rs examples/tree_map_reduce.bend
           bend run-rs examples/bitonic_sort.bend
           bend run-rs examples/fibonacci_modes.bend
+          bend run-rs examples/ai/tiny_mlp.bend
+          bend run-rs examples/ai/minimax_tree.bend
+          bend run-rs examples/ai/ensemble_vote.bend
       - name: Run parallel CPU smoke test
         run: bend run-c examples/parallel_sum.bend

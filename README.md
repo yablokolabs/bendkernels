@@ -24,6 +24,11 @@ The exact same `.bend` file can be run on the reference runtime, parallel CPU ru
 | `examples/tree_map_reduce.bend` | map/reduce | independent leaf kernels with a final checksum |
 | `examples/bitonic_sort.bend` | sorting network | compare/swap structure that maps well to parallel execution |
 | `examples/fibonacci_modes.bend` | branching vs sequential recursion | parallelism is not the same as algorithmic efficiency |
+| `examples/ai/tiny_mlp.bend` | neural-network inference | independent hidden neurons and batch samples |
+| `examples/ai/minimax_tree.bend` | game-tree search | independent child-position evaluation |
+| `examples/ai/ensemble_vote.bend` | ensemble inference | independent weak-learner votes over a batch |
+
+See [`docs/ai-kernels.md`](docs/ai-kernels.md) for the AI-focused examples.
 
 ## Install Bend
 
@@ -62,6 +67,9 @@ bend run-rs examples/parallel_sum.bend
 bend run-rs examples/tree_map_reduce.bend
 bend run-rs examples/bitonic_sort.bend
 bend run-rs examples/fibonacci_modes.bend
+bend run-rs examples/ai/tiny_mlp.bend
+bend run-rs examples/ai/minimax_tree.bend
+bend run-rs examples/ai/ensemble_vote.bend
 bend run-c examples/parallel_sum.bend
 ```
 
@@ -140,6 +148,42 @@ Result: 13530
 
 This example intentionally includes both a branching recursive Fibonacci and a tail-recursive Fibonacci. It is a reminder that more parallel structure does not automatically mean a better algorithm.
 
+### Tiny MLP inference
+
+```bash
+bend run-rs examples/ai/tiny_mlp.bend
+```
+
+```text
+Result: 426312
+```
+
+This runs a fixed integer neural-network forward pass over a synthetic batch and returns the batch-score checksum.
+
+### Minimax tree search
+
+```bash
+bend run-rs examples/ai/minimax_tree.bend
+```
+
+```text
+Result: 745
+```
+
+This evaluates a synthetic ternary game tree with alternating min/max layers.
+
+### Ensemble vote
+
+```bash
+bend run-rs examples/ai/ensemble_vote.bend
+```
+
+```text
+Result: 2024
+```
+
+This evaluates several independent decision stumps across a synthetic batch and returns the positive-class count.
+
 ## Interpreting results
 
 Bend currently uses 24-bit numeric types, so large integer examples may wrap modulo `2^24`. The examples return checksums rather than printing arrays or images, because Bend's IO ecosystem is still young and benchmark-style programs are easier to compare across runtimes.
@@ -160,7 +204,7 @@ Good Bend candidates usually have lots of independent subproblems. Bad candidate
 - Mandelbrot / fractal checksum
 - N-body simulation checksum
 - prefix scan
-- minimax tree search
+- larger AI inference/search kernels
 - benchmark result tables across CPU and GPU machines
 
 ## License
