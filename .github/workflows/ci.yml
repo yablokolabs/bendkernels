@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  bend-examples:
+    name: Bend examples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - name: Install Bend
+        run: |
+          cargo install hvm
+          cargo install bend-lang
+      - name: Run examples on reference runtime
+        run: |
+          bend run-rs examples/parallel_sum.bend
+          bend run-rs examples/tree_map_reduce.bend
+          bend run-rs examples/bitonic_sort.bend
+          bend run-rs examples/fibonacci_modes.bend
+      - name: Run parallel CPU smoke test
+        run: bend run-c examples/parallel_sum.bend

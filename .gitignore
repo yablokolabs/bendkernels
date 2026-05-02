@@ -1,0 +1,11 @@
+# Generated Bend targets
+*.c
+*.cu
+*.hvm
+*.out
+
+# Local outputs
+results/
+.DS_Store
+.env
+.env.*
